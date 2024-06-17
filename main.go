@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -46,7 +47,9 @@ func main() {
 
 	fmt.Println("Server running....")
 	app := fiber.New()
-
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "http://localhost:5173",
+	}))
 	app.Get("/api/todos", getTodos)
 	app.Post("/api/todos", createTodos)
 	app.Patch("/api/todos/:id", updateTodos)
